@@ -8,7 +8,7 @@ public:
             HashMap[i].push_back(original);
         }
         vector<vector<string>> ans;
-        for (auto i : HashMap)
+        for (const auto& i : HashMap)
             ans.push_back(i.second);
         return ans;
 
