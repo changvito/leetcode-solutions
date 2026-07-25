@@ -1,17 +1,24 @@
 ﻿class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        std:: unordered_map <int, int> HashMap;
+        std:: unordered_map<int, int> FreqCounter;
         for (const auto& x : nums){
-            HashMap[x]++;
+            FreqCounter[x]++;
         }
-        std:: vector<pair<int, int>> HashVec(HashMap.begin(), HashMap.end());
-        std:: sort(HashVec.begin(),HashVec.end(), [](const auto& a, const auto& b){
+        auto comp = [](const pair<int, int>& a, const pair<int, int>& b){
             return a.second > b.second;
-        });
-        vector<int> ans;
-        for (int i = 0; i < k; i++){
-            ans.push_back(HashVec[i].first);
+        };
+        std::priority_queue<pair<int, int>,vector<pair<int, int>>,decltype(comp)> MinHeap(comp);
+        for (const auto& x : FreqCounter){
+            MinHeap.push(x);
+            if (MinHeap.size() > k){
+                MinHeap.pop();
+            }
+        }
+        std:: vector<int> ans;
+        while (!MinHeap.empty()){
+            ans.push_back(MinHeap.top().first);
+            MinHeap.pop();
         }
         return ans;
     }
