@@ -5,20 +5,20 @@ public:
         for (const auto& x : nums){
             FreqCounter[x]++;
         }
-        auto comp = [](const pair<int, int>& a, const pair<int, int>& b){
-            return a.second > b.second;
-        };
-        std::priority_queue<pair<int, int>,vector<pair<int, int>>,decltype(comp)> MinHeap(comp);
+        std:: vector<vector<int>> bucket(nums.size()+1);
         for (const auto& x : FreqCounter){
-            MinHeap.push(x);
-            if (MinHeap.size() > k){
-                MinHeap.pop();
-            }
+            int num = x.first;
+            int freq = x.second;
+            bucket[freq].push_back(num);
         }
-        std:: vector<int> ans;
-        while (!MinHeap.empty()){
-            ans.push_back(MinHeap.top().first);
-            MinHeap.pop();
+        std::vector<int> ans;
+        for (int i = nums.size(); i >= 0; --i){
+            for (const auto& x : bucket[i]){
+                ans.push_back(x);
+                if (ans.size() == k){
+                    return ans;
+                }
+            }
         }
         return ans;
     }
