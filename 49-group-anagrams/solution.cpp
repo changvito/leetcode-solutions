@@ -1,16 +1,18 @@
 ﻿class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        unordered_map <string, vector<string>> HashMap;
-        for (auto i : strs){
-            string original = i;
-            std:: sort(i.begin(), i.end());
-            HashMap[i].push_back(original);
+        std:: map<array<int, 26>, vector<string>> HashMap;
+        for (const string& s : strs){
+            array<int, 26> count = {};
+            for (char c : s){
+                count [c - 'a']++;
+            }
+            HashMap[count].push_back(s); 
         }
         vector<vector<string>> ans;
-        for (const auto& i : HashMap)
-            ans.push_back(i.second);
+        for (auto x : HashMap){
+            ans.push_back(x.second);
+        }
         return ans;
-
     }
 };
