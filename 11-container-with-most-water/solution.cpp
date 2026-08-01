@@ -5,7 +5,7 @@ public:
         int Right = height.size() - 1;
         int Max = 0;
         while (Left < Right){
-            Max = max(Max, min(height[Left], height[Right]) * abs(Right - Left));
+            Max = max(Max, min(height[Left], height[Right]) * (Right - Left));
             if (height[Left] <= height[Right]){
                 Left++;
             }
