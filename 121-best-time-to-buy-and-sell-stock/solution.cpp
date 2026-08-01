@@ -1,7 +1,7 @@
 ﻿class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        int MinPrice = 1e9;
+        int MinPrice = prices[0];
         int MaxProfit = 0;
 
         for (int i : prices){
