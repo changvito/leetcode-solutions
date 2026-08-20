@@ -5,32 +5,22 @@ public:
             return true;
         }
         stack<char> VP;
+        unordered_map<char, char> Table = {
+            {')', '('},
+            {']', '['},
+            {'}', '{'}
+        };
         for (char c : s){
-            if (c == '(' || c =='[' || c == '{'){
+            if (Table.find(c) == Table.end()){
                 VP.push(c);
             }
-            else if ( c == ')'){
-                if (VP.empty() || VP.top() != '('){
-                    return false;
-                }
-                VP.pop();
-            }
-            else if ( c == ']'){
-                if (VP.empty() || VP.top() != '['){
-                    return false;
-                }
-                VP.pop();
-            }
-            else if ( c == '}'){
-                if (VP.empty() || VP.top() != '{'){
+            else{
+                if (VP.empty() || VP.top() != Table[c]){
                     return false;
                 }
                 VP.pop();
             }
         }
-        if (!VP.empty()){
-            return false;
-        }
-        return true;
-    }    
+        return VP.empty();
+    }
 };
