@@ -1,7 +1,7 @@
 ﻿class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        if(nums1.size() > nums2.size()){
+        if (nums1.size() > nums2.size()){
             return findMedianSortedArrays(nums2, nums1);
         }
         int m = nums1.size();
@@ -19,11 +19,13 @@ public:
                 if ((m + n) % 2 == 1){
                     return max(maxLeft1, maxLeft2);
                 }
-                return (max(maxLeft1, maxLeft2) + min(minRight1, minRight2)) / 2.0;
+                else {
+                    return (max(maxLeft1, maxLeft2) + min(minRight1, minRight2)) / 2.0;
+                }
             }
             else if (maxLeft1 > minRight2){
                 High = i - 1;
-            } 
+            }
             else {
                 Low = i + 1;
             }
