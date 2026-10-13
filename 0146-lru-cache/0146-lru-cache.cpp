@@ -1,34 +1,34 @@
 class LRUCache {
 private:
-    int Cap;
+    int Max;
     list<pair<int, int>> CacheList;
-    unordered_map <int, list<pair<int, int>>::iterator> CacheMap;
+    unordered_map<int, list<pair<int, int>>::iterator> CacheAddress;
 public:
     LRUCache(int capacity) {
-        Cap = capacity;
+        Max = capacity;
     }
     
     int get(int key) {
-        if (CacheMap.find(key) == CacheMap.end()){
+        if (CacheAddress.find(key) == CacheAddress.end()){
             return -1;
         }
-        CacheList.splice(CacheList.end(), CacheList, CacheMap[key]);
-        return CacheMap[key] -> second;
+        CacheList.splice(CacheList.end(), CacheList, CacheAddress[key]);
+        return CacheAddress[key] -> second;
     }
     
     void put(int key, int value) {
-        if (CacheMap.find(key) != CacheMap.end()){
-            CacheMap[key] -> second = value;
-            CacheList.splice(CacheList.end(), CacheList, CacheMap[key]);
+        if (CacheAddress.find(key) != CacheAddress.end()){
+            CacheAddress[key] -> second = value;
+            CacheList.splice(CacheList.end(), CacheList, CacheAddress[key]);
             return;
         }
-        if (CacheList.size() == Cap){
-            int DeleteKey = CacheList.front().first;
-            CacheMap.erase(DeleteKey);
+        if (CacheList.size() == Max){
+            int Temp = CacheList.front().first;
+            CacheAddress.erase(Temp);
             CacheList.pop_front();
         }
         CacheList.push_back({key, value});
-        CacheMap[key] = --CacheList.end();
+        CacheAddress[key] = --CacheList.end();
     }
 };
 
