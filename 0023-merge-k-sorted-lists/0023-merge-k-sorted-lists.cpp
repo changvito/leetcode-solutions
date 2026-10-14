@@ -11,36 +11,29 @@
 class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        if (lists.empty()){
-            return nullptr;
+        priority_queue<ListNode*, vector<ListNode*>, Compare> MinHeap;
+        for (ListNode* Head : lists){
+            if (Head != nullptr){
+                MinHeap.push(Head);
+            }
         }
-        return MergeRange(lists, 0, lists.size() - 1);
-    }
-private:
-    ListNode* MergeRange(vector<ListNode*>& lists, int Left, int Right){
-        if (Left == Right){
-            return lists[Left];
-        }
-        int Mid = Left + (Right - Left) / 2;
-        ListNode* LeftList = MergeRange(lists, Left, Mid);
-        ListNode* RightList = MergeRange(lists, Mid + 1, Right);
-        return MergeTwo(LeftList, RightList);
-    }
-    ListNode* MergeTwo(ListNode* A, ListNode* B){
         ListNode Dummy;
         ListNode* Tail = &Dummy;
-        while(A != nullptr && B != nullptr){
-            if (A -> val <= B -> val){
-                Tail -> next = A;
-                A = A -> next;
+        while(!MinHeap.empty()){
+            ListNode* Node = MinHeap.top();
+            MinHeap.pop();
+            Tail -> next = Node;
+            Tail = Node;
+            if (Node -> next != nullptr){
+                MinHeap.push(Node -> next);
             }
-            else{
-                Tail -> next = B;
-                B =B -> next;
-            }
-            Tail = Tail -> next;
         }
-        Tail -> next = (A != nullptr) ? A : B;
         return Dummy.next;
     }
+private:
+    struct Compare{
+        bool operator()(ListNode* A, ListNode* B){
+            return A -> val > B -> val;
+        }
+    };
 };
