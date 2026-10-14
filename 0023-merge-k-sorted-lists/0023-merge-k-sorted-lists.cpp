@@ -29,14 +29,14 @@ private:
     ListNode* MergeTwo(ListNode* A, ListNode* B){
         ListNode Dummy;
         ListNode* Tail = &Dummy;
-        while (A != nullptr && B != nullptr){
+        while(A != nullptr && B != nullptr){
             if (A -> val <= B -> val){
                 Tail -> next = A;
-                A = A-> next;
+                A = A -> next;
             }
             else{
                 Tail -> next = B;
-                B = B -> next;
+                B =B -> next;
             }
             Tail = Tail -> next;
         }
