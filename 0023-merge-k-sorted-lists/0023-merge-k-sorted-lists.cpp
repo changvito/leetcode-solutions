@@ -19,13 +19,13 @@ public:
         }
         ListNode Dummy;
         ListNode* Tail = &Dummy;
-        while(!MinHeap.empty()){
-            ListNode* Node = MinHeap.top();
+        while( !MinHeap.empty()){
+            ListNode* Temp = MinHeap.top();
             MinHeap.pop();
-            Tail -> next = Node;
-            Tail = Node;
-            if (Node -> next != nullptr){
-                MinHeap.push(Node -> next);
+            Tail -> next = Temp;
+            Tail = Temp;
+            if (Temp -> next != nullptr){
+                MinHeap.push(Temp -> next);
             }
         }
         return Dummy.next;
