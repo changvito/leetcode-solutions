@@ -13,19 +13,21 @@ class Solution {
 public:
     vector<vector<int>> levelOrder(TreeNode* root) {
         vector<vector<int>> Ans;
-        dfs(root, 0, Ans);
+        if (!root) return Ans;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            vector<int> Level;
+            int n = q.size();
+            for (int i = 0; i < n; i++ ){
+                TreeNode* Temp = q.front();
+                q.pop();
+                Level.push_back(Temp -> val);
+                if(Temp -> left) q.push(Temp -> left);
+                if(Temp -> right) q.push(Temp -> right);
+            }
+            Ans.push_back(Level);
+        }
         return Ans;
-    }
-private:
-    void dfs(TreeNode* t, int depth, vector<vector<int>>& Ans){
-        if (!t){
-            return;
-        }
-        if (depth == Ans.size()){
-            Ans.push_back({});
-        }
-        Ans[depth].push_back(t -> val);
-        dfs(t -> left, depth + 1, Ans);
-        dfs(t -> right, depth + 1, Ans);
     }
 };
