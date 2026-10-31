@@ -16,7 +16,7 @@ public:
     }
 private:
     int dfs(TreeNode* node, int maxSoFar){
-        if(!node) return 0;
+        if (!node) return 0;
         int Count = 0;
         if (node -> val >= maxSoFar) Count = 1;
         maxSoFar = max(maxSoFar, node -> val);
