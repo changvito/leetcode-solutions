@@ -18,7 +18,6 @@ private:
     bool check(TreeNode* node, long Low, long High){
         if (!node) return true;
         if (node -> val <= Low || node -> val >= High) return false;
-        return check(node -> left, Low, node -> val) &&
-                check(node -> right, node -> val, High);
+        return check(node -> left, Low, node -> val) && check(node -> right, node -> val, High);
     }
 };
