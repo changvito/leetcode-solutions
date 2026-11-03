@@ -12,19 +12,21 @@
 class Solution {
 public:
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        for (int i = 0; i < inorder.size(); i++) {
+            pos[inorder[i]] = i;          
+        }
         int preIdx = 0;
-        return build(preorder, inorder, preIdx, 0, preorder.size() - 1);
+        return build(preorder, preIdx, 0, inorder.size() - 1);
     }
 private:
-    TreeNode* build(vector<int>& preorder, vector<int>& inorder, int& preIdx, int inLeft, int inRight){
+    unordered_map<int, int> pos;
+
+    TreeNode* build(vector<int>& preorder, int& preIdx, int inLeft, int inRight) {
         if (inLeft > inRight) return nullptr;
-        TreeNode* node =new TreeNode(preorder[preIdx++]);
-        int inMid = inLeft;
-        while(inorder[inMid] != node -> val){
-            inMid++;
-        }
-        node -> left = build(preorder, inorder, preIdx, inLeft, inMid - 1);
-        node -> right = build(preorder, inorder, preIdx, inMid + 1, inRight);
+        TreeNode* node = new TreeNode(preorder[preIdx++]);
+        int inMid = pos[node->val];       
+        node->left  = build(preorder, preIdx, inLeft, inMid - 1);
+        node->right = build(preorder, preIdx, inMid + 1, inRight);
         return node;
     }
 };
